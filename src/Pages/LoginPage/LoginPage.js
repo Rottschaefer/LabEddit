@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { LabenuLogo } from "../../Components/LabenuLogo/LabenuLogo"
 import { useNavigate } from "react-router-dom"
 
@@ -6,6 +6,13 @@ import { StyledContinueButton, StyledDiv, StyledForm, StyledInput, StyledLoginPa
 import { goToSignUpPage } from "../../Routes/coordinator"
 
 export const LoginPage = () => {
+
+    const [fade, setFade] = useState(false)
+
+    useEffect(()=>{
+        setFade(true)
+    },[])
+    //Fade-in quando trocar pra esta página
 
     const navigate = useNavigate()
 
@@ -22,7 +29,7 @@ export const LoginPage = () => {
 
 
     return (
-        <StyledLoginPage>
+        <StyledLoginPage fade={fade}>
             <LabenuLogo size="9vw" time="4000"/>
             <StyledTitle>LabEddit</StyledTitle>
             <StyledSubTitle>O projeto de rede social da Labenu</StyledSubTitle>

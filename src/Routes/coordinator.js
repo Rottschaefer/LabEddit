@@ -6,3 +6,7 @@ export const goToSignUpPage = (navigate) => {
 export const goToLogInPage = (navigate) => {
     navigate('/')
 }
+
+export const goToFeedPage = (navigate) => {
+    navigate('/feed')
+}

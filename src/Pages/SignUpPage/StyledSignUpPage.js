@@ -1,9 +1,13 @@
 import { styled } from "styled-components";
 
+
 export const StyledSignUpPage = styled.main`
 display: flex;
 flex-direction: column;
 align-items: center;
+opacity: ${props=> props.fade ? "1" : "0"};
+
+transition: all 1s;
 `
 
 export const StyledTitle = styled.p`
@@ -44,6 +48,7 @@ padding-left: 16px;
 `
 
 export const StyledWarning = styled.p`
+text-align: center;
 font-family: 'Noto Sans';
 font-style: normal;
 font-weight: 400;
@@ -52,6 +57,8 @@ line-height: 19px;
 
 width: 78vw;
 max-width: 363px;
+color: ${props=>props.color};
+margin-bottom: ${props=>props.margin ? props.margin : "17px"}
 `
 
 // .attrs({ type: 'checkbox' })
@@ -105,5 +112,9 @@ font-size: 18px;
 line-height: 25px;
 font-weight: 700;
 color: white;
-margin-top: 56px;
+margin-top: 28px;
+
+opacity: ${props=>props.isLoading ? "0.5" : "1"};
+
+transition: all 1s;
 `

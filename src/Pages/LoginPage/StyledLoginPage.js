@@ -6,6 +6,9 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 height: 100vh;
+
+opacity: ${props=> props.fade ? "1" : "0"};
+transition: all 1s;
 `
 
 export const StyledTitle = styled.p`

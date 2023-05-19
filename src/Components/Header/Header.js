@@ -10,7 +10,7 @@ export const Header = () => {
     return (
         <StyledHeader>
             <StyledLogoConteiner>
-                <LabenuLogo size="3vw" time="20000" />
+                <LabenuLogo size="3vw" time="10000" />
             </StyledLogoConteiner>
             <StyledHeaderText onClick={()=>goToLogInPage(navigate)}>Entrar</StyledHeaderText>
         </StyledHeader>
