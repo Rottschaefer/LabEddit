@@ -66,7 +66,7 @@ export const SignUpPage = () => {
 
     return (
         <>
-            <Header fade={fade} />
+            <Header fade={fade} text="Entrar"/>
             <StyledSignUpPage fade={fade}>
                 <StyledTitle>Olá, boas vindas ao LabEddit ;)</StyledTitle>
                 <StyledSignUpForm>

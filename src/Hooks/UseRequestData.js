@@ -74,5 +74,21 @@ export const useRequestData = (path) => {
         return error
     }
 
-    return { addData, logInData }
+    const getPosts = (setPosts) => {
+
+        let token
+        if (localStorage.getItem("token")) {
+            token = JSON.parse(localStorage.getItem("token"))
+        }
+
+        const headers = {
+            Authorization: token
+        }
+
+        axios.get(path, {headers})
+        .then(response => {setPosts(response.data);})
+        .catch(error=>console.log(error))
+    }
+
+    return { addData, logInData, getPosts }
 }

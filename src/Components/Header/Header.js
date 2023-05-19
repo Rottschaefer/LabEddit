@@ -3,7 +3,7 @@ import { LabenuLogo } from "../LabenuLogo/LabenuLogo"
 import { StyledHeader, StyledHeaderText, StyledLogoConteiner } from "./StyledHeader"
 import { goToLogInPage } from "../../Routes/coordinator"
 
-export const Header = () => {
+export const Header = ({text}) => {
 
     const navigate = useNavigate()
 
@@ -12,7 +12,7 @@ export const Header = () => {
             <StyledLogoConteiner>
                 <LabenuLogo size="3vw" time="10000" />
             </StyledLogoConteiner>
-            <StyledHeaderText onClick={()=>goToLogInPage(navigate)}>Entrar</StyledHeaderText>
+            <StyledHeaderText onClick={()=>goToLogInPage(navigate)}>{text}</StyledHeaderText>
         </StyledHeader>
     )
 }
