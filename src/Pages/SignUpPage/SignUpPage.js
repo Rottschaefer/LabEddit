@@ -12,8 +12,6 @@ import { Loader } from "../../Components/Loader/Loader"
 
 export const SignUpPage = () => {
 
-    const navigate = useNavigate()
-
     const [fade, setFade] = useState(false)
 
     useEffect(() => {
@@ -21,16 +19,15 @@ export const SignUpPage = () => {
     }, [])
     //Fade-in quando trocar pra esta página
 
+    const [isLoading, setIsLoading] = useState(false)//Estado que define a animação de carregando no botão
+
+    const [badRequest, setBadRequest] = useState(false) //Estado que define se aparecerá uma mensagem de erro ou não
+    const [errorMessage, setErrorMessage] = useState("")//Mensagem de erro que irá aparecer
+
+    //Controle dos inputs abaixo
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-
-    const [isLoading, setIsLoading] = useState(false)
-    const [badRequest, setBadRequest] = useState(false)
-    const [token, setToken] = useState(undefined)
-
-    // const [clicked, setClicked] = useState(false)
-
 
     const handleName = (event) => {
         setName(event.target.value)
@@ -45,7 +42,6 @@ export const SignUpPage = () => {
     }
 
 
-    // const {data, addData} = useRequestData(path, body);
 
     const path = "http://localhost:3003/users/signup"
 
@@ -54,29 +50,18 @@ export const SignUpPage = () => {
     const createNewUser = () => {
         if(!name || !password || !email){
             setBadRequest(true)
+            setErrorMessage("É preciso preencher todos os campos para se cadastrar")
         }
         else{
         setBadRequest(false)
         setIsLoading(true)
         const body = ({ name, password, email })
-        setToken(addData(body, setIsLoading))
-        // localStorage.setItem("token", JSON.stringify(token))
-        // setTimeout(()=>{setIsLoading(false)}, 500)
-        
-
-        // if (token) {
-        //     localStorage.setItem("token", JSON.stringify(token))
-        //     goToFeedPage(navigate)
-        // }
+        addData(body, setIsLoading, setErrorMessage, setBadRequest)
+    
     }
     }
 
-    useEffect(()=>{
-        if(token){
-        localStorage.setItem("token", JSON.stringify(token))
-        goToFeedPage(navigate)
-        }
-    },[token])
+
 
 
     return (
@@ -94,8 +79,8 @@ export const SignUpPage = () => {
                     <StyledCheckBox type="checkbox" />
                     <StyledLabel>Eu concordo em receber emails sobre coisas legais no Labeddit</StyledLabel>
                 </StyledCheckConteiner>
-                {badRequest && <StyledWarning color="red" margin="-10px">É preciso preencher todos os campos para se cadastrar</StyledWarning>}
-                <StyledContinueButton onClick={createNewUser} isLoading={isLoading}>{isLoading ? "Só um instante..." : "Cadstastrar"}
+                {badRequest && <StyledWarning color="red" margin="-10px">{errorMessage}</StyledWarning>}
+                <StyledContinueButton onClick={createNewUser} isLoading={isLoading}>{isLoading ? "Só um instante..." : "Cadastrar"}
                 </StyledContinueButton>
                 
             </StyledSignUpPage>
