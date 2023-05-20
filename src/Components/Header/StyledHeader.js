@@ -10,6 +10,7 @@ height: 11vw;
 max-height: 100px;
 justify-content: end;
 align-items: center;
+background-color: #EDEDED;
 `
 
 export const StyledLogoConteiner = styled.div`

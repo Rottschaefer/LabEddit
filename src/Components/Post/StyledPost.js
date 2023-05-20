@@ -16,6 +16,7 @@ margin-bottom: 10px;
 background: #FBFBFB;
 border: 1px solid #E0E0E0;
 border-radius: 12px;
+
 `
 
 export const StyledId = styled.p`

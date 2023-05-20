@@ -95,7 +95,7 @@ export const StyledCheckConteiner = styled.div`
 width: 78vw;
 display: flex;
 align-items: center;
-gap: 11px
+gap: 11px;
 `
 
 

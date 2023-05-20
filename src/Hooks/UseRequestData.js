@@ -9,6 +9,12 @@ export const useRequestData = (path) => {
     const [error, setError] = useState("")
     const navigate = useNavigate()
 
+    const token = JSON.parse(localStorage.getItem("token"))
+
+    const headers = {
+        authorization: token
+    }
+
 
     const addData = (body, setIsLoading, setErrorMessage, setBadRequest) => {
 
@@ -37,9 +43,9 @@ export const useRequestData = (path) => {
     const logInData = (body, setIsLoading, setErrorMessage, setBadRequest, loadingTimes) => {
 
 
-        if (localStorage.getItem("token")) {
-            body.token = JSON.parse(localStorage.getItem("token"))
-        }
+        // if (localStorage.getItem("token")) {
+        //     body.token = JSON.parse(localStorage.getItem("token"))
+        // }
 
         axios.post(path, body)
             .then(response => {
@@ -48,6 +54,7 @@ export const useRequestData = (path) => {
                     localStorage.setItem("token", JSON.stringify(response.data.token));
                     goToFeedPage(navigate)
                     setIsLoading(false)
+                    setBadRequest(false)
                 }
                 else {
                     setIsLoading(false)
@@ -76,19 +83,68 @@ export const useRequestData = (path) => {
 
     const getPosts = (setPosts) => {
 
-        let token
-        if (localStorage.getItem("token")) {
-            token = JSON.parse(localStorage.getItem("token"))
-        }
+        // let token
+        // if (localStorage.getItem("token")) {
+        //     token = JSON.parse(localStorage.getItem("token"))
+        // }
 
         const headers = {
             Authorization: token
         }
 
-        axios.get(path, {headers})
-        .then(response => {setPosts(response.data);})
-        .catch(error=>console.log(error))
+        axios.get(path, { headers })
+            .then(response => {
+                const recentPosts = (response.data).reverse() //Lógica para aparecer primeiro os posts mais recentes
+                setPosts(recentPosts);
+            })
+            .catch(error => console.log(error))
     }
 
-    return { addData, logInData, getPosts }
+    const createPost = (body, setPosts, setBadRequest, setErrorMessage, setIsLoading, setText) => {
+
+        // const token = JSON.parse(localStorage.getItem("token"))
+
+        // const headers = {
+        //     Authorization: token
+        // }
+
+        axios.post(path, body, { headers })
+            .then(response => {
+                setBadRequest(false)
+                getPosts(setPosts)
+                setText("")
+            })
+            .catch(error => {
+                console.log(error.response.data[0].message)
+                setIsLoading(true)
+                setBadRequest(true);
+                if (error.response.data[0].message) {
+                    setErrorMessage(error.response.data[0].message)
+                    setIsLoading(false)
+                }
+                else {
+                    setErrorMessage(error.response.data)
+                    setIsLoading(false)
+                };
+            })
+    }
+
+    const likePost = (body, setPosts) => {
+
+        // const token = JSON.parse(localStorage.getItem("token"))
+
+        // const headers = {
+        //     Authorization: token
+        // }
+
+        axios.put(path, body, { headers })
+            .then(response => {
+                console.log(response.data)
+                getPosts(setPosts)
+            }
+            )
+            .catch(error => console.log(error))
+    }
+
+    return { addData, logInData, getPosts, createPost, likePost }
 }
