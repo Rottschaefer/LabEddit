@@ -5,22 +5,27 @@ import { ReactComponent as CommentBaloon } from "../../Assets/commentBaloon.svg"
 import { useEffect, useState } from "react";
 import { useRequestData } from "../../Hooks/UseRequestData";
 
-export const Post = ({name, content, likes, id, setPosts}) => {
+//Colocar animação de Loading no botão
+
+export const Post = ({name, content, likes, dislikes, id, setPosts}) => {
 
     const [arrowColor, setArrowColor] = useState("#FBFBFB")
     const [inversedArrowColor, setInversedArrowColor] = useState("#FBFBFB")
 
     // const [likes, setLikes] = useState(likes)
 
-    const path = `http://localhost:3003/posts/${id}`
+    const path = `http://localhost:3003/posts/${id}/like`
 
-    const {likePost} = useRequestData()
+
+    const {likePost} = useRequestData(path)
    
 
     const handleLike = () => {
     
         if (arrowColor === "#90ee90") {
             setArrowColor("#FBFBFB")
+            const body = {like: true}
+            likePost(body, setPosts)
         }
         else {
             setArrowColor("#90ee90")
@@ -34,9 +39,13 @@ export const Post = ({name, content, likes, id, setPosts}) => {
     
         if (inversedArrowColor === "#ff726f") {
             setInversedArrowColor("#FBFBFB")
+            const body = {like: false}
+            likePost(body, setPosts)
         }
         else {
             setInversedArrowColor("#ff726f")
+            const body = {like: false}
+            likePost(body, setPosts)
             setArrowColor("#FBFBFB")
         }
     }
@@ -51,6 +60,7 @@ export const Post = ({name, content, likes, id, setPosts}) => {
                 <StyledArrows>
                     <ArrowSVG onClick={handleLike} color={arrowColor} stroke='#6F6F6F' />
                     <StyledLikeCount>{likes}</StyledLikeCount>
+                    {/* <StyledLikeCount>{dislikes}</StyledLikeCount> */}
                     <StyledDislikeArrow>
                         <InversedArrowSVG onClick={handleDislike} color={inversedArrowColor} stroke='#6F6F6F' />
                     </StyledDislikeArrow>

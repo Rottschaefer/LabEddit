@@ -56,7 +56,6 @@ export const LoginPage = () => {
         }
         console.log(isLoading)
         const body = ({ email, password, token })
-        console.log(body)
        logInData(body, setIsLoading, setErrorMessage, setBadRequest, loadingTimes)
     }
 

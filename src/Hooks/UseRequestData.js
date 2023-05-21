@@ -92,7 +92,7 @@ export const useRequestData = (path) => {
             Authorization: token
         }
 
-        axios.get(path, { headers })
+        axios.get("http://localhost:3003/posts", { headers })
             .then(response => {
                 const recentPosts = (response.data).reverse() //Lógica para aparecer primeiro os posts mais recentes
                 setPosts(recentPosts);
@@ -143,7 +143,7 @@ export const useRequestData = (path) => {
                 getPosts(setPosts)
             }
             )
-            .catch(error => console.log(error))
+            .catch(error => console.log(error.response.data))
     }
 
     return { addData, logInData, getPosts, createPost, likePost }
