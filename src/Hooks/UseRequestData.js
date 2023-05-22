@@ -129,22 +129,66 @@ export const useRequestData = (path) => {
             })
     }
 
-    const likePost = (body, setPosts) => {
+    const likePost = (body, setPosts, setErrorMessage, setArrowColor, setInversedArrowColor, arrowColor, inversedArrowColor) => {
 
-        // const token = JSON.parse(localStorage.getItem("token"))
-
-        // const headers = {
-        //     Authorization: token
-        // }
+        //Preciso tirar a lógica daqui, estudar sincronicidade do react
 
         axios.put(path, body, { headers })
             .then(response => {
-                console.log(response.data)
-                getPosts(setPosts)
+
+                if (body.like) {
+                    if (arrowColor === "#90ee90") {
+                        setArrowColor("#FBFBFB")
+                    }
+                    else {
+                        setArrowColor("#90ee90")
+                        setInversedArrowColor("#FBFBFB")
+                    }
+                }
+
+                if (!body.like) {
+                    if (inversedArrowColor === "#ff726f") {
+                        setInversedArrowColor("#FBFBFB")
+                    }
+                    else {
+                        setInversedArrowColor("#ff726f")
+                        setArrowColor("#FBFBFB")
+                    }
+                }
+
+                // setArrowColor(color)
+                // setInversedArrowColor("#FBFBFB")
+                getPosts(setPosts) // Para atualizar o número de likes na hora da ação
+            }
+            )
+            .catch(error => {
+                setErrorMessage(error.response.data)
+                setTimeout(() => setErrorMessage(false), 3000)
+            }
+
+            )
+
+
+    }
+
+    const verifyLike = (setReaction, reaction, setArrowColor, setInversedArrowColor) => {
+
+        axios.get(path, { headers })
+            .then(response => {
+                setReaction(response.data.likeSituation)
+                console.log(reaction)
+
+                if (response.data.likeSituation === 1) {
+                    setArrowColor("#90ee90")
+                }
+
+                if (response.data.likeSituation === 0) {
+                    setInversedArrowColor("#ff726f")
+                }
             }
             )
             .catch(error => console.log(error.response.data))
     }
 
-    return { addData, logInData, getPosts, createPost, likePost }
+    return { addData, logInData, getPosts, createPost, likePost, verifyLike }
 }

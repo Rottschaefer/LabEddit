@@ -131,3 +131,17 @@ text-align: center;
 color: #6F6F6F;
 
 ` 
+
+export const StyledErrorMessage = styled.p`
+text-align: center;
+font-family: 'Noto Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 19px;
+
+width: 78vw;
+max-width: 363px;
+color: red;
+margin-top: 0px;
+`

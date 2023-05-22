@@ -20,6 +20,7 @@ export const FeedPage = () => {
 
     useEffect(() => {
         getPosts(setPosts)
+       
     }, [])
 
     const [text, setText] = useState("")
@@ -48,7 +49,7 @@ export const FeedPage = () => {
                 <StyledPostButton onClick={handleCreatePost}>Postar</StyledPostButton>
                 <StyledDiv />
             </StyledNewPostSection>
-            {posts.map((post) => { return <Post setPosts={setPosts} name={post.creator.name} id={post.id} content={post.content} likes={post.likes} dislikes={post.dislikes} /> })}
+            {posts.map((post) => { return <Post  setPosts={setPosts} name={post.creator.name} id={post.id} content={post.content} likes={post.likes} dislikes={post.dislikes} /> })}
         </StyledFeedPage>
     )
 }
