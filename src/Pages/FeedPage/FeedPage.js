@@ -49,7 +49,7 @@ export const FeedPage = () => {
                 <StyledPostButton onClick={handleCreatePost}>Postar</StyledPostButton>
                 <StyledDiv />
             </StyledNewPostSection>
-            {posts.map((post) => { return <Post  setPosts={setPosts} name={post.creator.name} id={post.id} content={post.content} likes={post.likes} dislikes={post.dislikes} /> })}
+            {posts.map((post) => { return <Post display= "flex" setPosts={setPosts} post={post}/> })}
         </StyledFeedPage>
     )
 }

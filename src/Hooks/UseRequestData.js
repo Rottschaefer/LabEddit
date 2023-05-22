@@ -81,7 +81,7 @@ export const useRequestData = (path) => {
         return error
     }
 
-    const getPosts = (setPosts) => {
+    const getPosts = async (setPosts) => {
 
         // let token
         // if (localStorage.getItem("token")) {
@@ -92,10 +92,32 @@ export const useRequestData = (path) => {
             Authorization: token
         }
 
+        await axios.get("http://localhost:3003/posts", { headers })
+            .then(response => {
+                const recentPosts = (response.data).reverse() //Lógica para aparecer primeiro os posts mais recentes
+                setPosts(recentPosts)
+
+                    // if (id) {
+                    //     const post = recentPosts.find((post) => post.id === id)
+                    //     setPosts(post)
+                    // }
+                    ;
+            })
+            .catch(error => console.log(error))
+    }
+
+    const getPostById = (setPost, id) => {
+
+        const headers = {
+            Authorization: token
+        }
+
         axios.get("http://localhost:3003/posts", { headers })
             .then(response => {
                 const recentPosts = (response.data).reverse() //Lógica para aparecer primeiro os posts mais recentes
-                setPosts(recentPosts);
+
+                const post = recentPosts.find((post) => post.id === id)
+                setPost(post)
             })
             .catch(error => console.log(error))
     }
@@ -129,46 +151,18 @@ export const useRequestData = (path) => {
             })
     }
 
-    const likePost = (body, setPosts, setErrorMessage, setArrowColor, setInversedArrowColor, arrowColor, inversedArrowColor) => {
+    const likePost = async (body, setPosts, id) => {
 
-        //Preciso tirar a lógica daqui, estudar sincronicidade do react
-
-        axios.put(path, body, { headers })
+        await axios.put(path, body, { headers })
             .then(response => {
-
-                if (body.like) {
-                    if (arrowColor === "#90ee90") {
-                        setArrowColor("#FBFBFB")
-                    }
-                    else {
-                        setArrowColor("#90ee90")
-                        setInversedArrowColor("#FBFBFB")
-                    }
-                }
-
-                if (!body.like) {
-                    if (inversedArrowColor === "#ff726f") {
-                        setInversedArrowColor("#FBFBFB")
-                    }
-                    else {
-                        setInversedArrowColor("#ff726f")
-                        setArrowColor("#FBFBFB")
-                    }
-                }
-
-                // setArrowColor(color)
-                // setInversedArrowColor("#FBFBFB")
-                getPosts(setPosts) // Para atualizar o número de likes na hora da ação
+                    getPosts(setPosts) // Para atualizar o número de likes na hora da ação 
             }
             )
             .catch(error => {
-                setErrorMessage(error.response.data)
-                setTimeout(() => setErrorMessage(false), 3000)
+                throw new Error("Não é possível dar like e dislike no própio post")
             }
 
             )
-
-
     }
 
     const verifyLike = (setReaction, reaction, setArrowColor, setInversedArrowColor) => {
@@ -176,19 +170,20 @@ export const useRequestData = (path) => {
         axios.get(path, { headers })
             .then(response => {
                 setReaction(response.data.likeSituation)
-                console.log(reaction)
-
-                if (response.data.likeSituation === 1) {
-                    setArrowColor("#90ee90")
-                }
-
-                if (response.data.likeSituation === 0) {
-                    setInversedArrowColor("#ff726f")
-                }
             }
             )
             .catch(error => console.log(error.response.data))
     }
 
-    return { addData, logInData, getPosts, createPost, likePost, verifyLike }
+    const getComments = () => {
+        axios.get(path)
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    return { addData, logInData, getPosts, getPostById, createPost, likePost, verifyLike, getComments }
 }

@@ -10,3 +10,7 @@ export const goToLogInPage = (navigate) => {
 export const goToFeedPage = (navigate) => {
     navigate('/feed')
 }
+
+export const goToCommentsPage = (navigate, id) => {
+    navigate(`/feed/${id}`)
+}

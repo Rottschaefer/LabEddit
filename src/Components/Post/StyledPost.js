@@ -1,6 +1,4 @@
 import { styled } from "styled-components";
-import { ReactComponent as ArrowSVG } from "../../Assets/arrow.svg";
-
 
 export const StyledPostConteiner = styled.div`
 width: 78vw;
@@ -92,7 +90,7 @@ color: #6F6F6F;
 ` 
 
 export const StyledCommentInfo = styled.div`
-display: flex;
+display: ${props=>props.display};//Se for na página de comentários, a aba de info dos comentários não deve aparecer
 flex-direction: row;
 justify-content: center;
 align-items: center;
