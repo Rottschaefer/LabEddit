@@ -81,54 +81,37 @@ export const useRequestData = (path) => {
         return error
     }
 
-    const getPosts = async (setPosts) => {
+    const getPosts = async () => {
 
-        // let token
-        // if (localStorage.getItem("token")) {
-        //     token = JSON.parse(localStorage.getItem("token"))
-        // }
+        let recentPosts
 
-        const headers = {
-            Authorization: token
-        }
+        await axios.get("http://localhost:3003/posts", { headers })
+            .then(response => {
+                recentPosts = (response.data).reverse() //Lógica para aparecer primeiro os posts mais recentes
+                // setPosts(recentPosts)
+            })
+            .catch(error => console.log(error))
+
+        return recentPosts
+
+    }
+
+    const getPostById = async (id) => {
+
+        let post
 
         await axios.get("http://localhost:3003/posts", { headers })
             .then(response => {
                 const recentPosts = (response.data).reverse() //Lógica para aparecer primeiro os posts mais recentes
-                setPosts(recentPosts)
 
-                    // if (id) {
-                    //     const post = recentPosts.find((post) => post.id === id)
-                    //     setPosts(post)
-                    // }
-                    ;
+                post = recentPosts.find((post) => post.id === id)
             })
             .catch(error => console.log(error))
-    }
 
-    const getPostById = (setPost, id) => {
-
-        const headers = {
-            Authorization: token
-        }
-
-        axios.get("http://localhost:3003/posts", { headers })
-            .then(response => {
-                const recentPosts = (response.data).reverse() //Lógica para aparecer primeiro os posts mais recentes
-
-                const post = recentPosts.find((post) => post.id === id)
-                setPost(post)
-            })
-            .catch(error => console.log(error))
+            return post
     }
 
     const createPost = (body, setPosts, setBadRequest, setErrorMessage, setIsLoading, setText) => {
-
-        // const token = JSON.parse(localStorage.getItem("token"))
-
-        // const headers = {
-        //     Authorization: token
-        // }
 
         axios.post(path, body, { headers })
             .then(response => {
@@ -151,13 +134,9 @@ export const useRequestData = (path) => {
             })
     }
 
-    const likePost = async (body, setPosts, id) => {
+    const likePost = async (body) => {
 
         await axios.put(path, body, { headers })
-            .then(response => {
-                    getPosts(setPosts) // Para atualizar o número de likes na hora da ação 
-            }
-            )
             .catch(error => {
                 throw new Error("Não é possível dar like e dislike no própio post")
             }
@@ -175,15 +154,42 @@ export const useRequestData = (path) => {
             .catch(error => console.log(error.response.data))
     }
 
-    const getComments = () => {
-        axios.get(path)
+    const getComments = async () => {
+
+        let comments
+
+           await axios.get(path, {headers})
+                .then(response => {
+                    comments = response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+        return comments
+    }
+
+    const createComment = async (body) => {
+
+        await axios.post(path, body, { headers })
             .then(response => {
                 console.log(response.data)
             })
             .catch(error => {
-                console.log(error)
+                console.log(error.response.data[0].message)
             })
     }
 
-    return { addData, logInData, getPosts, getPostById, createPost, likePost, verifyLike, getComments }
+    const likeComment = async (body) => {
+
+        await axios.put(path, body, { headers })
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.log(error.response.data[0].message)
+            })
+    }
+
+    return { addData, logInData, getPosts, getPostById, createPost, likePost, verifyLike, getComments, createComment, likeComment }
 }

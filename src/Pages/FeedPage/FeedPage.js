@@ -11,17 +11,30 @@ export const FeedPage = () => {
 
     const [fade, setFade] = useState(false)
 
-    useEffect(() => {
-        setFade(true)
-    }, [])
-
-
     const [posts, setPosts] = useState([])
 
+
     useEffect(() => {
-        getPosts(setPosts)
-       
+        handleInitialization()
     }, [])
+
+    const handleInitialization = async () => {
+        try {
+            setFade(true)
+            const posts = await getPosts()
+            setPosts(posts)
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+
+
+    // useEffect(() => {
+    //     getPosts(setPosts)
+
+    // }, [])
 
     const [text, setText] = useState("")
 
@@ -49,7 +62,7 @@ export const FeedPage = () => {
                 <StyledPostButton onClick={handleCreatePost}>Postar</StyledPostButton>
                 <StyledDiv />
             </StyledNewPostSection>
-            {posts.map((post) => { return <Post display= "flex" setPosts={setPosts} post={post}/> })}
+            {posts.map((post) => { return <Post display="flex" setPosts={setPosts} post={post} /> })}
         </StyledFeedPage>
     )
 }

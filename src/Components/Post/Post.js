@@ -14,6 +14,7 @@ export const Post = ({ setPosts, display, post }) => {
     const navigate = useNavigate()
 
     const [reaction, setReaction] = useState(2) //estado que define a cor das setas de like e dislike
+    const [localLikes, setLocalLikes] = useState(post.likes) //estado que muda o número de likes temporariamente até que putra requisição seja feita
     const [errorMessage, setErrorMessage] = useState(false)
 
     const path = `http://localhost:3003/posts/${post.id}/like`
@@ -35,13 +36,25 @@ export const Post = ({ setPosts, display, post }) => {
         try {
             const body = { like: true }
 
-            await likePost(body, setPosts)
+            await likePost(body)
 
+           
+            let likes = localLikes
+
+            // setErrorMessage(false)
             if (reaction === 1) {
                 setReaction(2)
+                
+                likes--
+
+                setLocalLikes(likes)
             }
-            else {
+            else{
                 setReaction(1)
+
+                likes++
+
+                setLocalLikes(likes)
             }
         }
         catch (error) {
@@ -60,8 +73,15 @@ export const Post = ({ setPosts, display, post }) => {
 
             await likePost(body, setPosts)
 
+            let likes = localLikes
+
             if (reaction === 0) {
                 setReaction(2)
+            }
+            else if(reaction === 1){
+                likes--
+                setLocalLikes(likes)
+                setReaction(0)
             }
             else {
                 setReaction(0)
@@ -80,12 +100,12 @@ export const Post = ({ setPosts, display, post }) => {
     return (
         <>
             <StyledPostConteiner>
-                <StyledId>Enviado por: {post.creator.name}</StyledId>
+                <StyledId>Enviado por: {post.creator?.name ??  post.name}</StyledId>
                 <StyledText>{post.content}</StyledText>
                 <StyledExtraInfo>
                     <StyledArrows>
                         <ArrowSVG onClick={handleLike} color={reaction === 1 ? "#90ee90" : "#FBFBFB"} stroke='#6F6F6F' />
-                        <StyledLikeCount>{post.likes}</StyledLikeCount>
+                        <StyledLikeCount>{localLikes}</StyledLikeCount>
                         {/* <StyledLikeCount>{dislikes}</StyledLikeCount> */}
                         <StyledDislikeArrow>
                             <InversedArrowSVG onClick={handleDislike} color={reaction === 0 ? "#ff726f" : "#FBFBFB"} stroke='#6F6F6F' />

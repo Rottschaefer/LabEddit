@@ -4,6 +4,7 @@ import { Post } from "../../Components/Post/Post"
 import { StyledAnswerButton, StyledCommentPage, StyledDiv, StyledTextArea } from "./StyledCommentsPage"
 import { useRequestData } from "../../Hooks/UseRequestData"
 import { useEffect, useState } from "react"
+import { Comment } from "../../Components/Comment/Comment"
 
 export const CommentsPage = () => {
 
@@ -17,7 +18,19 @@ export const CommentsPage = () => {
 
     const [post, setPost] = useState(postMock)
 
-    console.log(post)
+    const [comments, setComments] = useState([])
+
+    const [isLoading, setIsLoading] = useState(true)
+
+
+    //Controle do input de comentário
+    const [content, setContent] = useState("")
+
+    const handleData = (setFunction) => (event) => {
+        setFunction(event.target.value)
+    }
+
+    // console.log(post)
 
 
     const { id } = useParams()
@@ -26,17 +39,50 @@ export const CommentsPage = () => {
     const path = `http://localhost:3003/comments/${id}`
     const path2 = `http://localhost:3003/posts`
 
-    const { getComments } = useRequestData(path)
+    const { getComments, createComment } = useRequestData(path)
     const { getPostById } = useRequestData(path2)
 
-    useEffect( () => {
-        getPostById(setPost, id)
-        getComments()
+    useEffect(() => {
+        handleInitialization()
     }, [])
 
-    
 
-   
+    const handleInitialization = async () => {
+        try {
+            const comments = await getComments()
+            const post = await getPostById(id)
+            setPost(post)
+            setComments(comments.reverse())
+            setIsLoading(false)
+        }
+        catch (error) {
+            console.log(error)
+        }
+
+
+    }
+
+
+    const handlePostComment = async () => {
+        try {
+
+            const body = { content }
+
+            await createComment(body)
+
+            setContent("")
+
+            const comments = await getComments()
+
+            setComments(comments.reverse())
+
+
+        }
+        catch { }
+    }
+
+
+
 
 
     return (
@@ -48,13 +94,14 @@ export const CommentsPage = () => {
                 <StyledAnswerButton>Responder</StyledAnswerButton>
                 <StyledDiv />
                 <Post display="none" post={post} /> */}
-                {post !== postMock ? (
+                {(post !== postMock && comments) ? (
                     <>
-                        <Post setPosts={setPost} display="flex" post={post}/>
-                        <StyledTextArea placeholder="Adicionar comentário" />
-                        <StyledAnswerButton>Responder</StyledAnswerButton>
+                        <Post setPosts={setPost} display="flex" post={post} />
+                        <StyledTextArea placeholder="Adicionar comentário" value={content} onChange={handleData(setContent)} />
+                        <StyledAnswerButton onClick={handlePostComment}>Responder</StyledAnswerButton>
                         <StyledDiv />
-                        <Post display="none" post={post} />
+                        {/* {isLoading ?  <p>Erro</p> : comments.map((comment)=>{return <Post display="none" post={comment} />}) } */}
+                        {comments.map((comment) => { return <Comment display="none" comment={comment} /> })}
                     </>
                 ) : (
                     <p>Só um instante...estamos trazendo os comentários!</p>
