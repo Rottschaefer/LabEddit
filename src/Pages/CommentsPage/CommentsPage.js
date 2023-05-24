@@ -67,6 +67,8 @@ export const CommentsPage = () => {
     const handlePostComment = async () => {
         try {
 
+            setIsLoading(true)
+
             const body = { content }
 
             await createComment(body)
@@ -77,9 +79,12 @@ export const CommentsPage = () => {
 
             setComments(comments.reverse())
 
+            setIsLoading(false)
 
         }
-        catch { }
+        catch(error) { 
+            console.log(error)
+        }
     }
 
 
@@ -99,7 +104,7 @@ export const CommentsPage = () => {
                     <>
                         <Post setPosts={setPost} display="flex" post={post} />
                         <StyledTextArea placeholder="Adicionar comentário" value={content} onChange={handleData(setContent)} />
-                        <StyledAnswerButton onClick={handlePostComment}>Responder</StyledAnswerButton>
+                        <StyledAnswerButton isLoading={isLoading} onClick={handlePostComment}>{isLoading ? "Postando comentário..." : "Responder"}</StyledAnswerButton>
                         <StyledDiv />
                         {/* {isLoading ?  <p>Erro</p> : comments.map((comment)=>{return <Post display="none" post={comment} />}) } */}
                         {comments.map((comment) => { return <Comment display="none" comment={comment} post={post}/> })}
