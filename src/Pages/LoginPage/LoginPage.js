@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { StyledContinueButton, StyledDiv, StyledErrorMessage, StyledForm, StyledInput, StyledLoginPage, StyledSignUpButton, StyledSubTitle, StyledTitle } from "./StyledLoginPage"
 import { goToSignUpPage } from "../../Routes/coordinator"
 import { useRequestData } from "../../Hooks/UseRequestData"
+import { PATH } from "../../Assets/constants"
 
 export const LoginPage = () => {
 
@@ -35,7 +36,7 @@ export const LoginPage = () => {
     const [errorMessage, setErrorMessage] = useState("")//Mensagem de erro que irá aparecer
     const [isLoading, setIsLoading] = useState(false)//Estado que define a animação de carregando no botão
 
-    const path = "http://localhost:3003/users/login"
+    const path = `${PATH}/users/login`
     const { logInData } = useRequestData(path)
 
     const [token, setToken] = useState(undefined)
@@ -72,10 +73,12 @@ export const LoginPage = () => {
                 <StyledInput onChange={handlePassword} type="password" id="password" name="password" placeholder="Senha" />
             </StyledForm>
             {badRequest && <StyledErrorMessage>{errorMessage}</StyledErrorMessage>}
-            <StyledContinueButton onClick={handleLogIn} isLoading={isLoading}>{isLoading ? "Só um instante" : "Continuar"}</StyledContinueButton>
+            <StyledContinueButton onClick={handleLogIn} onTouchStart={handleLogIn} isLoading={isLoading}>{isLoading ? "Só um instante" : "Continuar"}</StyledContinueButton>
             <StyledDiv />
             <StyledSignUpButton onClick={() => goToSignUpPage(navigate)}>Crie uma conta!</StyledSignUpButton>
         </StyledLoginPage>
 
     )
 }
+
+// onClick={handleLogIn}

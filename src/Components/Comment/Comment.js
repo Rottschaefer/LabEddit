@@ -6,6 +6,7 @@ import { useRequestData } from "../../Hooks/UseRequestData";
 import { useNavigate } from "react-router-dom";
 import { goToCommentsPage } from "../../Routes/coordinator";
 import { StyledArrows, StyledCommentCount, StyledCommentInfo, StyledDislikeArrow, StyledErrorMessage, StyledExtraInfo, StyledId, StyledLikeCount, StyledPostConteiner, StyledText } from "./StyledComment";
+import { PATH } from "../../Assets/constants";
 
 //Colocar animação de Loading no botão
 
@@ -17,50 +18,58 @@ export const Comment = ({ setPosts, display, comment, post }) => { //Preferi cri
     const [localLikes, setLocalLikes] = useState(comment.likes) //estado que muda o número de likes temporariamente até que outra requisição seja feita
     const [errorMessage, setErrorMessage] = useState(false)
 
-    // const path = `http://localhost:3003/posts/${post.id}/like`
+    const path = `${PATH}/comments/${comment.id}/like`
 
-    // const path2 = `http://localhost:3003/posts/${post.id}/verify-like`
+    const path2 = `${PATH}/comments/${comment.id}/verify-like`
 
 
-    // const { likePost } = useRequestData(path)
-    // const { verifyLike } = useRequestData(path2)
+    const { likeComment } = useRequestData(path)
+    const { verifyLike } = useRequestData(path2)
 
     //Ver se o usuário já reagiu(like ou dislike) em algum post no primeiro carregamento
-    // useEffect(() => {
-    //     verifyLike(setReaction, reaction)
-    // }, [])
+    useEffect(() => {
+        handleInitialization()
+    }, [])
+
+    const handleInitialization = async () => {
+            const likeSituation = await verifyLike()
+            setReaction(likeSituation)
+    }
 
 
     const handleLike = async () => {
 
-        // try {
-        //     const body = { like: true }
+        try {
+            const body = {
+                like: true,
+                postId: post.id
+            }
 
-        //     await likePost(body)
+            await likeComment(body)
 
-           
-        //     let likes = localLikes
 
-        //     // setErrorMessage(false)
-        //     if (reaction === 1) {
-        //         setReaction(2)
-                
-        //         likes--
+            let likes = localLikes
 
-        //         setLocalLikes(likes)
-        //     }
-        //     else{
-        //         setReaction(1)
+            // setErrorMessage(false)
+            if (reaction === 1) {
+                setReaction(2)
 
-        //         likes++
+                likes--
 
-        //         setLocalLikes(likes)
-        //     }
-        // }
-        // catch (error) {
-        //     setErrorMessage(error.message)
-        //     setTimeout(() => setErrorMessage(false), 3000)
-        // }
+                setLocalLikes(likes)
+            }
+            else {
+                setReaction(1)
+
+                likes++
+
+                setLocalLikes(likes)
+            }
+        }
+        catch (error) {
+            setErrorMessage(error.message)
+            setTimeout(() => setErrorMessage(false), 3000)
+        }
 
     }
 
@@ -68,29 +77,32 @@ export const Comment = ({ setPosts, display, comment, post }) => { //Preferi cri
 
     const handleDislike = async () => {
 
-        // try {
-        //     const body = { like: false }
+        try {
+            const body = {
+                like: false,
+                postId: post.id
+            }
 
-        //     await likePost(body, setPosts)
+            await likeComment(body)
 
-        //     let likes = localLikes
+            let likes = localLikes
 
-        //     if (reaction === 0) {
-        //         setReaction(2)
-        //     }
-        //     else if(reaction === 1){
-        //         likes--
-        //         setLocalLikes(likes)
-        //         setReaction(0)
-        //     }
-        //     else {
-        //         setReaction(0)
-        //     }
-        // }
-        // catch (error) {
-        //     setErrorMessage(error.message)
-        //     setTimeout(() => setErrorMessage(false), 3000)
-        // }
+            if (reaction === 0) {
+                setReaction(2)
+            }
+            else if(reaction === 1){
+                likes--
+                setLocalLikes(likes)
+                setReaction(0)
+            }
+            else {
+                setReaction(0)
+            }
+        }
+        catch (error) {
+            setErrorMessage(error.message)
+            setTimeout(() => setErrorMessage(false), 3000)
+        }
 
     }
 

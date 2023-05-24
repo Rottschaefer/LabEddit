@@ -118,3 +118,24 @@ max-width: 363px;
 color: red;
 margin-bottom: 0px;
 `
+
+export const StyledDeletedMessage = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100vw;
+height: 5vh;
+position: sticky;
+top: 0;
+color: red;
+background-color: #EDEDED;
+text-align: center;
+font-family: 'Noto Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 19px;
+
+margin-top: -20px;
+margin-bottom: 7px;
+`

@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { goToFeedPage } from "../Routes/coordinator"
+import { ThemeProvider } from "styled-components"
 
 export const useRequestData = (path) => {
 
@@ -43,10 +44,6 @@ export const useRequestData = (path) => {
     const logInData = (body, setIsLoading, setErrorMessage, setBadRequest, loadingTimes) => {
 
 
-        // if (localStorage.getItem("token")) {
-        //     body.token = JSON.parse(localStorage.getItem("token"))
-        // }
-
         axios.post(path, body)
             .then(response => {
                 setIsLoading(true)
@@ -85,7 +82,7 @@ export const useRequestData = (path) => {
 
         let recentPosts
 
-        await axios.get("http://localhost:3003/posts", { headers })
+        await axios.get(path, { headers })
             .then(response => {
                 recentPosts = (response.data).reverse() //Lógica para aparecer primeiro os posts mais recentes
                 // setPosts(recentPosts)
@@ -100,7 +97,7 @@ export const useRequestData = (path) => {
 
         let post
 
-        await axios.get("http://localhost:3003/posts", { headers })
+        await axios.get(path, { headers })
             .then(response => {
                 const recentPosts = (response.data).reverse() //Lógica para aparecer primeiro os posts mais recentes
 
@@ -111,26 +108,23 @@ export const useRequestData = (path) => {
             return post
     }
 
-    const createPost = (body, setPosts, setBadRequest, setErrorMessage, setIsLoading, setText) => {
+    const createPost = async (body) => {
 
-        axios.post(path, body, { headers })
+        await axios.post(path, body, { headers })
+            .catch(error => {
+                console.log(error.response.data[0].message)
+                throw new Error(error.response.data[0].message)
+            })
+    }
+
+    const deletePost = async () => {
+
+        await axios.delete(path, { headers })
             .then(response => {
-                setBadRequest(false)
-                getPosts(setPosts)
-                setText("")
+                console.log(response.data)
             })
             .catch(error => {
                 console.log(error.response.data[0].message)
-                setIsLoading(true)
-                setBadRequest(true);
-                if (error.response.data[0].message) {
-                    setErrorMessage(error.response.data[0].message)
-                    setIsLoading(false)
-                }
-                else {
-                    setErrorMessage(error.response.data)
-                    setIsLoading(false)
-                };
             })
     }
 
@@ -144,14 +138,18 @@ export const useRequestData = (path) => {
             )
     }
 
-    const verifyLike = (setReaction, reaction, setArrowColor, setInversedArrowColor) => {
+    const verifyLike = async () => {
 
-        axios.get(path, { headers })
+        let likeSituation
+
+        await axios.get(path, { headers })
             .then(response => {
-                setReaction(response.data.likeSituation)
+                likeSituation = response.data.likeSituation
             }
             )
             .catch(error => console.log(error.response.data))
+
+            return likeSituation
     }
 
     const getComments = async () => {
@@ -187,9 +185,9 @@ export const useRequestData = (path) => {
                 console.log(response.data)
             })
             .catch(error => {
-                console.log(error.response.data[0].message)
+                throw new Error(error.response.data)
             })
     }
 
-    return { addData, logInData, getPosts, getPostById, createPost, likePost, verifyLike, getComments, createComment, likeComment }
+    return { addData, logInData, getPosts, getPostById, createPost, deletePost, likePost, verifyLike, getComments, createComment, likeComment }
 }

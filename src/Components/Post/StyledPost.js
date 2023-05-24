@@ -1,4 +1,6 @@
 import { styled } from "styled-components";
+import { IoMdTrash } from "react-icons/io"
+
 
 export const StyledPostConteiner = styled.div`
 width: 78vw;
@@ -15,6 +17,26 @@ background: #FBFBFB;
 border: 1px solid #E0E0E0;
 border-radius: 12px;
 
+opacity: ${props=>props.fade? 1 : 0};
+
+transition: all 1s;
+
+`
+
+export const StyledTopDiv = styled.div`
+display: flex;
+justify-content: space-between;
+width: 100%;
+align-items: center;
+`
+
+export const StyledTrashCan = styled(IoMdTrash)`
+
+margin: 8px;
+
+:hover{
+  color: red;
+  }
 `
 
 export const StyledId = styled.p`
@@ -59,7 +81,8 @@ export const StyledSVG = styled.object`
 
 export const StyledDislikeArrow = styled.div`
 rotate: 180deg;
-` 
+margin-top: -3px;
+`
 
 export const StyledArrows = styled.div`
 width: 85px;
@@ -87,10 +110,10 @@ text-align: center;
 
 color: #6F6F6F;
 
-` 
+`
 
 export const StyledCommentInfo = styled.div`
-display: ${props=>props.display};//Se for na página de comentários, a aba de info dos comentários não deve aparecer
+display: ${props => props.display};//Se for na página de comentários, a aba de info dos comentários não deve aparecer
 flex-direction: row;
 justify-content: center;
 align-items: center;
@@ -128,7 +151,7 @@ text-align: center;
 
 color: #6F6F6F;
 
-` 
+`
 
 export const StyledErrorMessage = styled.p`
 text-align: center;

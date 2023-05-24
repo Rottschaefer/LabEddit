@@ -1,0 +1,1 @@
+export const PATH = "https://labeddit-backend-npai.onrender.com"

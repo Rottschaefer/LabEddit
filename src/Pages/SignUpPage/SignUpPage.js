@@ -8,6 +8,7 @@ import * as React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { Loader } from "../../Components/Loader/Loader"
+import { PATH } from "../../Assets/constants"
 
 
 export const SignUpPage = () => {
@@ -43,7 +44,7 @@ export const SignUpPage = () => {
 
 
 
-    const path = "http://localhost:3003/users/signup"
+    const path = `${PATH}/signup`
 
     const { addData } = useRequestData(path)
 

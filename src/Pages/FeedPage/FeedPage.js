@@ -2,11 +2,13 @@ import { useEffect, useState } from "react"
 import { Header } from "../../Components/Header/Header"
 import { useRequestData } from "../../Hooks/UseRequestData"
 import { Post } from "../../Components/Post/Post"
-import { StyledDiv, StyledErrorMessage, StyledFeedPage, StyledInput, StyledNewPostSection, StyledPlaceHolder, StyledPostButton, StyledTextArea } from "./StyledFeedPage"
+import { StyledDeletedMessage, StyledDiv, StyledErrorMessage, StyledFeedPage, StyledInput, StyledNewPostSection, StyledPlaceHolder, StyledPostButton, StyledTextArea } from "./StyledFeedPage"
+import { PATH } from "../../Assets/constants"
 
 export const FeedPage = () => {
 
-    const path = "http://localhost:3003/posts"
+    const path = `${PATH}/posts`
+    
     const { getPosts, createPost } = useRequestData(path)
 
     const [fade, setFade] = useState(false)
@@ -38,14 +40,32 @@ export const FeedPage = () => {
 
     const [text, setText] = useState("")
 
+    const [deletedMessage, setDeletedMessage] = useState("")
+
     const handleData = (setFunction) => (event) => {
         setFunction(event.target.value)
     }
 
-    const handleCreatePost = () => {
-        const body = { content: text }
-        createPost(body, setPosts, setBadRequest, setErrorMessage, setIsLoading, setText)
-        // getPosts(setPosts)
+    const handleCreatePost = async () => {
+
+        setIsLoading(true)
+
+        try{
+            setBadRequest(false)
+            const body = { content: text }
+            await createPost(body)
+            setIsLoading(false)
+            setText("")
+
+            const updatedPosts = await getPosts()
+
+            setPosts(updatedPosts)
+        }
+        catch(error){
+            setBadRequest(true);
+            setErrorMessage(error.message)
+        }
+        
     }
 
     const [badRequest, setBadRequest] = useState(false) //Estado que define se aparecerá uma mensagem de erro ou não
@@ -62,7 +82,8 @@ export const FeedPage = () => {
                 <StyledPostButton onClick={handleCreatePost}>Postar</StyledPostButton>
                 <StyledDiv />
             </StyledNewPostSection>
-            {posts.map((post) => { return <Post display="flex" setPosts={setPosts} post={post} /> })}
+            {deletedMessage && <StyledDeletedMessage>{deletedMessage}</StyledDeletedMessage>}
+            {posts.map((post) => { return <Post display="flex" setPosts={setPosts} posts={posts} post={post} setDeletedMessage={setDeletedMessage}/> })}
         </StyledFeedPage>
     )
 }

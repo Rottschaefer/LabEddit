@@ -5,6 +5,7 @@ import { StyledAnswerButton, StyledCommentPage, StyledDiv, StyledTextArea } from
 import { useRequestData } from "../../Hooks/UseRequestData"
 import { useEffect, useState } from "react"
 import { Comment } from "../../Components/Comment/Comment"
+import { PATH } from "../../Assets/constants"
 
 export const CommentsPage = () => {
 
@@ -36,8 +37,8 @@ export const CommentsPage = () => {
     const { id } = useParams()
 
 
-    const path = `http://localhost:3003/comments/${id}`
-    const path2 = `http://localhost:3003/posts`
+    const path = `${PATH}/comments/${id}`
+    const path2 = `${PATH}/posts`
 
     const { getComments, createComment } = useRequestData(path)
     const { getPostById } = useRequestData(path2)
@@ -101,7 +102,7 @@ export const CommentsPage = () => {
                         <StyledAnswerButton onClick={handlePostComment}>Responder</StyledAnswerButton>
                         <StyledDiv />
                         {/* {isLoading ?  <p>Erro</p> : comments.map((comment)=>{return <Post display="none" post={comment} />}) } */}
-                        {comments.map((comment) => { return <Comment display="none" comment={comment} /> })}
+                        {comments.map((comment) => { return <Comment display="none" comment={comment} post={post}/> })}
                     </>
                 ) : (
                     <p>Só um instante...estamos trazendo os comentários!</p>
