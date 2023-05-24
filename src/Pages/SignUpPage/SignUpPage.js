@@ -42,7 +42,7 @@ export const SignUpPage = () => {
 
 
 
-    const path = `${PATH}/signup`
+    const path = `${PATH}/users/signup`
 
     const { addData } = useRequestData(path)
 
