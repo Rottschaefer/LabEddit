@@ -4,7 +4,7 @@ import { ReactComponent as InversedArrowSVG } from "../../Assets/arrow copy.svg"
 import { ReactComponent as CommentBaloon } from "../../Assets/commentBaloon.svg";
 import { useEffect, useState } from "react";
 import { useRequestData } from "../../Hooks/UseRequestData";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { goToCommentsPage } from "../../Routes/coordinator";
 import {BsTrashFill} from "react-icons/bs"
 import { PATH } from "../../Assets/constants";
@@ -21,6 +21,8 @@ export const Post = ({ setPosts, display, post, posts, setDeletedMessage }) => {
     const [localLikes, setLocalLikes] = useState(post.likes) //estado que muda o número de likes temporariamente até que putra requisição seja feita
     const [errorMessage, setErrorMessage] = useState(false)
     const [fade, setFade] = useState(false)
+    const [commentsNumber, setCommentsNumber] = useState(0)
+
 
     const path = `${PATH}/posts/${post.id}/like`
 
@@ -28,21 +30,39 @@ export const Post = ({ setPosts, display, post, posts, setDeletedMessage }) => {
 
     const path3 = `${PATH}/posts/${post.id}`
 
+    const path4 = `${PATH}/comments/${post.id}`
+
+    const location = useLocation()
+
+
+    if(location.pathname.includes("/feed/")){
+        post.creator.isTheCreator = false //Na página de comments, a opção de deletar post não deve aparecer
+    }
+
 
     const { likePost } = useRequestData(path)
     const { verifyLike } = useRequestData(path2)
     const { deletePost } = useRequestData(path3)
+    const { getComments } = useRequestData(path4)
 
     //Ver se o usuário já reagiu(like ou dislike) em algum post no primeiro carregamento
 
     useEffect(() => {
         handleInitialization()
-    }, [])
+    }, [posts])
 
     const handleInitialization = async () => {
+            setReaction(2)
             const likeSituation = await verifyLike()
             setReaction(likeSituation)
             setFade(true)
+
+            const comments = await getComments()
+
+            setCommentsNumber(comments.length)
+
+            console.log(comments.length)
+
     }
 
 
@@ -145,7 +165,7 @@ export const Post = ({ setPosts, display, post, posts, setDeletedMessage }) => {
                     </StyledArrows>
                     <StyledCommentInfo display={display} onClick={() => goToCommentsPage(navigate, post.id)}>
                         <CommentBaloon />
-                        <StyledCommentCount>300</StyledCommentCount>
+                        <StyledCommentCount>{commentsNumber}</StyledCommentCount>
                     </StyledCommentInfo>
                 </StyledExtraInfo>
             </StyledPostConteiner>
