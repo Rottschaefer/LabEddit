@@ -6,6 +6,9 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 height: 100vh;
+
+opacity: ${props=> props.fade ? "1" : "0"};
+transition: all 1s;
 `
 
 export const StyledTitle = styled.p`
@@ -60,6 +63,9 @@ line-height: 25px;
 font-weight: 700;
 color: white;
 margin-top: 56px;
+opacity: ${props=> props.isLoading ? "0.5" : "1"};
+
+transition: all 1s;
 `
 
 export const StyledSignUpButton = styled.button`
@@ -85,4 +91,18 @@ width: 78vw;
 max-width: 363px;
 height: 1px;
 margin-top: 18px;
+`
+
+export const StyledErrorMessage = styled.p`
+text-align: center;
+font-family: 'Noto Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 19px;
+
+width: 78vw;
+max-width: 363px;
+color: red;
+margin-bottom: -40px;
 `
