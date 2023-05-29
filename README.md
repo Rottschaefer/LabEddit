@@ -1,7 +1,7 @@
 
 
 <h1 align="center">
-     LabEddit - Front-End
+     LabEddit - Front End
 </h1>
 
 <h4 align="left">
