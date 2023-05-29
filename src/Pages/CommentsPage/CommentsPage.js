@@ -31,7 +31,6 @@ export const CommentsPage = () => {
         setFunction(event.target.value)
     }
 
-    // console.log(post)
 
 
     const { id } = useParams()
@@ -95,18 +94,13 @@ export const CommentsPage = () => {
         <>
             <Header text="Logout" />
             <StyledCommentPage>
-                {/* <Post display="flex" post={post}/>
-                <StyledTextArea placeholder="Adicionar comentário" />
-                <StyledAnswerButton>Responder</StyledAnswerButton>
-                <StyledDiv />
-                <Post display="none" post={post} /> */}
+            
                 {(post !== postMock && comments) ? (
                     <>
                         <Post setPosts={setPost} display="flex" post={post} />
                         <StyledTextArea placeholder="Adicionar comentário" value={content} onChange={handleData(setContent)} />
                         <StyledAnswerButton isLoading={isLoading} onClick={handlePostComment}>{isLoading ? "Postando comentário..." : "Responder"}</StyledAnswerButton>
                         <StyledDiv />
-                        {/* {isLoading ?  <p>Erro</p> : comments.map((comment)=>{return <Post display="none" post={comment} />}) } */}
                         {comments.map((comment) => { return <Comment display="none" comment={comment} post={post}/> })}
                     </>
                 ) : (

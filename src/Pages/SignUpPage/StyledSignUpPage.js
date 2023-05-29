@@ -3,6 +3,10 @@ import { styled } from "styled-components";
 
 export const StyledSignUpPage = styled.main`
 display: flex;
+justify-content: center;
+/* width: 100vw; */
+/* max-width: 465px; */
+/* max-height: 100vh; */
 flex-direction: column;
 align-items: center;
 opacity: ${props=> props.fade ? "1" : "0"};
@@ -17,6 +21,8 @@ font-weight: 700;
 font-size: 33px;
 line-height: 43px;
 width: 78vw;
+max-width: 480px;
+/* max-width: 400px; */
 margin-top: 29px;
 
 color: #373737;
@@ -26,7 +32,7 @@ export const StyledSignUpForm = styled.form`
 display: flex;
 flex-direction: column;
 gap: 8px;
-margin-top: 42vw;
+margin-top: 194px;
 `
 
 export const StyledSignUpInput = styled.input`
@@ -58,10 +64,8 @@ line-height: 19px;
 width: 78vw;
 max-width: 363px;
 color: ${props=>props.color};
-margin-bottom: ${props=>props.margin ? props.margin : "17px"}
+margin-bottom: ${props=>props.margin ? props.margin : "17px"};
 `
-
-// .attrs({ type: 'checkbox' })
 
 export const StyledHiddenCheckBox = styled.input`
 
@@ -95,6 +99,7 @@ export const StyledCheckConteiner = styled.div`
 width: 78vw;
 display: flex;
 align-items: center;
+justify-content: center;
 gap: 11px;
 `
 
@@ -113,6 +118,7 @@ line-height: 25px;
 font-weight: 700;
 color: white;
 margin-top: 28px;
+margin-bottom: 28px;
 
 opacity: ${props=>props.isLoading ? "0.5" : "1"};
 

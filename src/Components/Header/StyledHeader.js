@@ -28,7 +28,6 @@ font-style: normal;
 font-weight: 600;
 font-size: 18px;
 line-height: 25px;
-/* text-align: center; */
 justify-self: end;
 color: #4088CB;
 padding-right:29px;
