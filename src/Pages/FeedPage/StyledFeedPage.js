@@ -91,7 +91,7 @@ font-weight: 700;
 color: white;
 margin-top: 12px;
 
-/* opacity: ${props=>props.isLoading ? "0.5" : "1"}; */
+opacity: ${props=>props.isLoading ? "0.5" : "1"};
 
 transition: all 1s;
 `

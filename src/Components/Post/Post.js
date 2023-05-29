@@ -13,8 +13,6 @@ import { PATH } from "../../Assets/constants";
 
 export const Post = ({ setPosts, display, post, posts, setDeletedMessage }) => {
 
-    // console.log(post)
-
     const navigate = useNavigate()
 
     const [reaction, setReaction] = useState(2) //estado que define a cor das setas de like e dislike
@@ -61,8 +59,6 @@ export const Post = ({ setPosts, display, post, posts, setDeletedMessage }) => {
 
             setCommentsNumber(comments.length)
 
-            console.log(comments.length)
-
     }
 
 
@@ -76,7 +72,6 @@ export const Post = ({ setPosts, display, post, posts, setDeletedMessage }) => {
            
             let likes = localLikes
 
-            // setErrorMessage(false)
             if (reaction === 1) {
                 setReaction(2)
                 
@@ -158,7 +153,6 @@ export const Post = ({ setPosts, display, post, posts, setDeletedMessage }) => {
                     <StyledArrows>
                         <ArrowSVG onClick={handleLike} color={reaction === 1 ? "#90ee90" : "#FBFBFB"} stroke='#6F6F6F' />
                         <StyledLikeCount>{localLikes}</StyledLikeCount>
-                        {/* <StyledLikeCount>{dislikes}</StyledLikeCount> */}
                         <StyledDislikeArrow>
                             <InversedArrowSVG onClick={handleDislike} color={reaction === 0 ? "#ff726f" : "#FBFBFB"} stroke='#6F6F6F' />
                         </StyledDislikeArrow>

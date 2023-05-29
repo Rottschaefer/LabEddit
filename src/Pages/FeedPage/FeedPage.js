@@ -11,6 +11,16 @@ export const FeedPage = () => {
     
     const { getPosts, createPost } = useRequestData(path)
 
+    
+    const [badRequest, setBadRequest] = useState(false) //Estado que define se aparecerá uma mensagem de erro ou não
+    const [errorMessage, setErrorMessage] = useState("")//Mensagem de erro que irá aparecer
+    const [isLoading, setIsLoading] = useState(false)//Estado que define a animação de carregando no botão
+
+    
+    const [text, setText] = useState("")
+
+    const [deletedMessage, setDeletedMessage] = useState("")
+
     const [fade, setFade] = useState(false)
 
     const [posts, setPosts] = useState([])
@@ -33,14 +43,6 @@ export const FeedPage = () => {
 
 
 
-    // useEffect(() => {
-    //     getPosts(setPosts)
-
-    // }, [])
-
-    const [text, setText] = useState("")
-
-    const [deletedMessage, setDeletedMessage] = useState("")
 
     const handleData = (setFunction) => (event) => {
         setFunction(event.target.value)
@@ -63,14 +65,11 @@ export const FeedPage = () => {
         }
         catch(error){
             setBadRequest(true);
+            setIsLoading(false)
             setErrorMessage(error.message)
         }
         
     }
-
-    const [badRequest, setBadRequest] = useState(false) //Estado que define se aparecerá uma mensagem de erro ou não
-    const [errorMessage, setErrorMessage] = useState("")//Mensagem de erro que irá aparecer
-    const [isLoading, setIsLoading] = useState(false)//Estado que define a animação de carregando no botão
 
 
     return (
@@ -79,7 +78,7 @@ export const FeedPage = () => {
             <StyledNewPostSection>
                 <StyledTextArea placeholder="Escreva seu post..." value={text} onChange={handleData(setText)} />
                 {badRequest && <StyledErrorMessage>{errorMessage}</StyledErrorMessage>}
-                <StyledPostButton onClick={handleCreatePost}>Postar</StyledPostButton>
+                <StyledPostButton isLoading={isLoading} onClick={handleCreatePost}>{isLoading ? "Postando..." : "Postar"}</StyledPostButton>
                 <StyledDiv />
             </StyledNewPostSection>
             {deletedMessage && <StyledDeletedMessage>{deletedMessage}</StyledDeletedMessage>}

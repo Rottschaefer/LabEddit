@@ -134,7 +134,6 @@ margin-bottom: 9px;
 export const StyledExtraInfo = styled.div`
 display: flex;
 align-items: center;
-/* flex-direction: row; */
 width: auto;
 
 `

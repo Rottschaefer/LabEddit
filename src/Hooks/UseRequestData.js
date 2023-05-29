@@ -38,7 +38,6 @@ export const useRequestData = (path) => {
                 setIsLoading(false)
             })
 
-        // return data
     }
 
     const logInData = (body, setIsLoading, setErrorMessage, setBadRequest, loadingTimes) => {
@@ -85,7 +84,6 @@ export const useRequestData = (path) => {
         await axios.get(path, { headers })
             .then(response => {
                 recentPosts = (response.data).reverse() //Lógica para aparecer primeiro os posts mais recentes
-                // setPosts(recentPosts)
             })
             .catch(error => console.log(error))
 
@@ -112,7 +110,6 @@ export const useRequestData = (path) => {
 
         await axios.post(path, body, { headers })
             .catch(error => {
-                console.log(error.response.data[0].message)
                 throw new Error(error.response.data[0].message)
             })
     }
@@ -170,9 +167,6 @@ export const useRequestData = (path) => {
     const createComment = async (body) => {
 
         await axios.post(path, body, { headers })
-            .then(response => {
-                console.log(response.data)
-            })
             .catch(error => {
                 console.log(error.response.data[0].message)
             })
@@ -181,9 +175,7 @@ export const useRequestData = (path) => {
     const likeComment = async (body) => {
 
         await axios.put(path, body, { headers })
-            .then(response => {
-                console.log(response.data)
-            })
+        
             .catch(error => {
                 throw new Error(error.response.data)
             })
