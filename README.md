@@ -28,7 +28,6 @@ Conecte-se comigo no LinkedIn! - https://www.linkedin.com/in/eduardo-rottschaefe
    * [Status](#status)
    * [Objetivo do Projeto](#objetivo-do-projeto)
    * [Requisitos de Funcionalidade](#requisitos-de-funcionalidade)
-   * [Concepção do Projeto](#concepcao-do-projeto)
    * [Link para Acessar](#link-para-acessar)
    * [Rodando o Projeto](#rodando-o-projeto)
    * [Sobre a Licença](#sobre-a-licença)
@@ -52,7 +51,6 @@ Este é um projeto de Full-Stack, desenvolvido no bootcamp da Labenu, cujo o pri
 - [x] Uso do ReactJS
 - [x] Site deployado
 
-Além das funcionalidades, aqui você pode por Prints e gifs do seu projeto, como ele funciona.
 
 <table>
   <tr>
@@ -86,7 +84,6 @@ Além das funcionalidades, aqui você pode por Prints e gifs do seu projeto, com
 
 
 
-
 ## 🛰Rodando o Projeto
 
 Para Rodar o projeto, siga as seguintes etapas :
@@ -95,6 +92,9 @@ Para Rodar o projeto, siga as seguintes etapas :
 - Abra o arquivo do projeto pelo terminal
 - Execute o comando npm install
 - Execute o comando npm start
+- Aproveite o Projeto :)
+
+OBS: É possível que as funcionalidades do site demorem algo em torno de 30 segundos para começar a funcionar devido a natureza gratuita do serviço de hospedagem. Após esse tempo tudo corre normalment ;)
 
 
 ## 📝Sobre a Licença
