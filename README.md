@@ -54,53 +54,48 @@ Este é um projeto de Full-Stack, desenvolvido no bootcamp da Labenu, cujo o pri
 
 Além das funcionalidades, aqui você pode por Prints e gifs do seu projeto, como ele funciona.
 
-
-![texto alternativo da imagem](./src/assets/logInPage.png) 
-
-
-
----
-
-## 💡Concepção do Projeto
-
-- **Wireframe do Projeto:** ~~COLOCAR AQUI O WIREFRAME "ESBOÇO" DO PROJETO~~
-- **Link do Figma:** ~~COLOCAR AQUI O LINK DO FIGMA | LINK DO ADOBE XD | LINK DO WIREFRAME (FRONT-END)~~
-- **Modelagem do Banco de Dados :** ~~COLOCAR AQUI OS DIAGRAMAS DE MODELAGEM DO BANCO DE DADOS E EXPLICAR UM POUCO SOBRE~~ . 
-
-EXEMPLO: 
-
-Para esse projeto são modelados três entidades : **Estudante (STUDENT), Professor (TEACHER)** e **Turma(CLASS)**.  Cada um com as seguintes caracteristicas :
-
-→ Estudante -  id, nome, email, data de nascimento e os principais hobbies;
-
-→ Professor - id, nome, email, data de nascimento e todas as especialidades ;
-
-→ Classe - id, nome, data de início, data de término, lista de professores responsáveis, uma lista de alunos e módulo atual em que a turma está.
-
-![Untitled](https://user-images.githubusercontent.com/52434685/120907206-16eb8700-c636-11eb-936f-d5212a4c5a36.png)
-
+<table>
+  <tr>
+    <td align="center">
+      <p align="center">Página de Login</p>
+      <img src="./src/Assets/logInPage.png" alt="Página de Logi" width="200">
+    </td>
+    <td align="center">
+      <p align="center">Página de Cadastro</p>
+      <img src="./src/Assets/signUpPage.png" alt="Página de Cadastro" width="200">
+    </td>
+       </table>
+       <table>
+     <td align="center">
+      <p align="center">Página de Feed</p>
+      <img src="./src/Assets/FeedPage.png" alt="Página de Feed" width="200">
+    </td>
+    <td align="center">
+      <p align="center">Página de Comentários</p>
+      <img src="./src/Assets/CommentsPage.png" alt="Página de Comentários" width="200">
+    </td>
+  </tr>
+</table>
 
 ---
+
 
 ## 🔗Link para Acessar
 
-- **Link do Surge:** ~~COLOCAR AQUI O LINK DO SURGE~~
+- **Link do Deploy:** https://lab-eddit.vercel.app/
 
----
+
 
 
 ## 🛰Rodando o Projeto
 
-~~EXPLICAR AQUI O PASSO A PASSO PARA CONSEGUIR RODAR E ACESSAR O PROJETO.~~
-
 Para Rodar o projeto, siga as seguintes etapas :
 
-- COLOCAR A ETAPA 1
-- COLOCAR A ETAPA 2
-- COLOCAR A ETAPA 3
+- Faça um clone deste repositório em sua máquina com o comando git clone https://github.com/Rottschaefer/LabEddit.git
+- Abra o arquivo do projeto pelo terminal
+- Execute o comando npm install
+- Execute o comando npm start
 
-
----
 
 ## 📝Sobre a Licença
 
