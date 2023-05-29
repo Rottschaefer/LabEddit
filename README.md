@@ -55,6 +55,10 @@ Este é um projeto de Full-Stack, desenvolvido no bootcamp da Labenu, cujo o pri
 Além das funcionalidades, aqui você pode por Prints e gifs do seu projeto, como ele funciona.
 
 
+![texto alternativo da imagem](./src/assets/logInPage.png) 
+
+
+
 ---
 
 ## 💡Concepção do Projeto
